@@ -1,0 +1,15 @@
+mtllib stairwell.mtl
+
+# left Wall
+v 0 0 0
+v 5 0 0
+v 9 3 0
+v 11 3 0
+v 16 6 0
+v 20 6 0
+v 20 10 0
+v 0 10 0
+
+usemtl oceanblue
+f -8 -7 -6 -5 -4 -3 -2 -1
+

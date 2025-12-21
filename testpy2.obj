@@ -1,0 +1,100 @@
+mtllib stairwell.mtl
+
+# left Wall
+v 0 0 0
+v 5 0 0
+v 9 3 0
+v 11 3 0
+v 16 6 0
+v 20 6 0
+v 20 10 0
+v 0 10 0
+
+usemtl oceanblue
+f -8 -7 -6 -5 -4 -3 -2 -1
+
+# opp left Wall
+v 0 0 1
+v 5 0 1
+v 9 3 1
+v 11 3 1
+v 16 6 1
+v 20 6 1
+v 20 10 1
+v 0 10 1
+
+usemtl oceanblue
+f -8 -7 -6 -5 -4 -3 -2 -1
+
+# -1_edge_left Wall
+v 0 10 0
+v 0 0 0
+v 0 0 1
+v 0 10 1
+
+usemtl oceanblue
+f -4 -3 -2 -1
+
+# 0_edge_left Wall
+v 0 0 0
+v 5 0 0
+v 5 0 1
+v 0 0 1
+
+usemtl oceanblue
+f -4 -3 -2 -1
+
+# 1_edge_left Wall
+v 5 0 0
+v 9 3 0
+v 9 3 1
+v 5 0 1
+
+usemtl oceanblue
+f -4 -3 -2 -1
+
+# 2_edge_left Wall
+v 9 3 0
+v 11 3 0
+v 11 3 1
+v 9 3 1
+
+usemtl oceanblue
+f -4 -3 -2 -1
+
+# 3_edge_left Wall
+v 11 3 0
+v 16 6 0
+v 16 6 1
+v 11 3 1
+
+usemtl oceanblue
+f -4 -3 -2 -1
+
+# 4_edge_left Wall
+v 16 6 0
+v 20 6 0
+v 20 6 1
+v 16 6 1
+
+usemtl oceanblue
+f -4 -3 -2 -1
+
+# 5_edge_left Wall
+v 20 6 0
+v 20 10 0
+v 20 10 1
+v 20 6 1
+
+usemtl oceanblue
+f -4 -3 -2 -1
+
+# 6_edge_left Wall
+v 20 10 0
+v 0 10 0
+v 0 10 1
+v 20 10 1
+
+usemtl oceanblue
+f -4 -3 -2 -1
+
