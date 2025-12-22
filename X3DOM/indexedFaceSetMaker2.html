@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .ptInput {
+            background-color: aquamarine;
+            width: 5em;
+        }
+
+        #pointInputArea {
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="pointInputArea">
+            <div>Node  x  y  z</div>
+
+        </div>
+        <input type="button" id="addPoint" value="Add Point">
+    </div>
+
+</body>
+
+<script>
+
+    npts = 0;
+
+    function ptInput(dim="x", i){ // i is an index number
+        let div = document.createElement("input");
+        div.type = "number";
+        div.id = `${dim}_${i}`;
+        div.classList.add("ptInput");
+        div.setAttribute("step", "0.001")
+        return div;
+    }
+
+    function addPointInput(){
+        npts += 1;
+        let div = document.createElement("div");
+        let ntext = document.createTextNode("v " + npts);
+        div.appendChild(ntext);
+
+        div.appendChild( ptInput("x", npts) );
+        div.appendChild( ptInput("y", npts) );
+        div.appendChild( ptInput("z", npts) );
+
+        pointInputArea.appendChild(div)
+    }
+
+    addPointButton = document.getElementById("addPoint");
+    addPointButton.addEventListener("click", function(){
+        addPointInput()
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        addPointInput();
+    })
+
+
+</script>
+
+</html>

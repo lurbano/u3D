@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="pointInputArea">
+        Input points as: x y z (Three Floating Point numbers separated with a space)<br>
+        <textarea id="pointInput" rows="5" cols="22">
+0 0 0
+        </textarea>
+        <input type="button" id="plotPoints" value="Add Points">
+    </div>
+</body>
+
+<script>
+
+    plotPoints.addEventListener("click", function(){
+        let txt = pointInput.value;
+        console.log(txt);
+    })
+
+
+</script>
+
+</html>
