@@ -139,6 +139,33 @@ class uMaterial {
 }
 
 
+class uTransform{
+    constructor(params={}){
+        let defaults ={
+            translation: "0 0 0",
+            render: true,
+            visible: true,
+            bboxcenter: "0 0 0",
+            bboxmargin: "0.01",
+            bboxcolor: "1,1,0",
+            center: "0,0,0",
+            rotation: "0,0,0,0",
+            scale:"1,1,1",
+            scaleorientation: "0,0,0,0"
+        }
+        this.params = {...defaults, ...params};
+
+        this.div = document.createElement("transform");
+        setAttributes(this.div, this.params);
+
+    }
+
+    appendChild(uObj){
+        this.div.appendChild(uObj.div);
+    }
+}
+
+
 class uBox{
     constructor(params={}){
         let defaults = {
@@ -155,13 +182,51 @@ class uBox{
         this.shape = new uShape();
         this.appearance = new uAppearance();
         this.material = new uMaterial();
+
+        this.transform = new uTransform();
     }
 
     assemble(){
         this.appearance.div.appendChild(this.material.div);
         this.shape.div.appendChild(this.appearance.div);
         this.shape.div.appendChild(this.div);
-        return this.shape.div;
+
+        this.transform.appendChild(this.shape);
+
+        return this.transform.div;
     }
 }
 
+class uSphere{
+    constructor(params={}){
+        let defaults = {
+            solid: true,
+            ccw: true,
+            usegeocache:"true",
+            lit: true,
+            radius: 1.41,
+            subdivision: "24,24"
+        }
+        this.params = {...defaults, ...params};
+
+        this.div = document.createElement("sphere");
+        setAttributes(this.div, this.params);
+        this.shape = new uShape();
+        this.appearance = new uAppearance();
+        this.material = new uMaterial({
+            diffusecolor:"0 1 0"
+        });
+
+        this.transform = new uTransform();
+    }
+
+    assemble(){
+        this.appearance.div.appendChild(this.material.div);
+        this.shape.div.appendChild(this.appearance.div);
+        this.shape.div.appendChild(this.div);
+        
+        this.transform.appendChild(this.shape);
+
+        return this.transform.div;
+    }
+}
