@@ -233,3 +233,42 @@ class uSphere extends uPrimitive{
     }
 
 }
+
+class uCone extends uPrimitive{
+    constructor(params={}){
+        let defaults = {
+            solid: true,
+            ccw: true,
+            usegeocache:"true",
+            lit: true,
+            bottomRadius: 1.5,
+            top:true,
+            subdivision: "32"
+        }
+        params = {...defaults, ...params};
+
+        super(params, "cone");
+    }
+
+}
+
+class uCylinder extends uPrimitive{
+    constructor(params={}){
+        let defaults = {
+            solid: true,
+            ccw: true,
+            usegeocache:"true",
+            lit: true,
+            radius: 1,
+            height: 2,
+            top:true,
+            bottom:true,
+            side:true,
+            subdivision: "32"
+        }
+        params = {...defaults, ...params};
+
+        super(params, "cylinder");
+    }
+
+}
