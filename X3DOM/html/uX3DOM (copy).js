@@ -138,38 +138,6 @@ class uMaterial {
     }
 }
 
-class uPrimitive {
-    constructor(params={}, primitiveType="box"){
-        let defaults = {}
-        this.params = {...defaults, ...params};
-
-        this.div = document.createElement(primitiveType);
-        setAttributes(this.div, this.params);
-        this.shape = new uShape();
-        this.appearance = new uAppearance();
-        this.material = new uMaterial();
-
-        this.transform = new uTransform();
-    }
-
-    assemble(){
-        this.appearance.div.appendChild(this.material.div);
-        this.shape.div.appendChild(this.appearance.div);
-        this.shape.div.appendChild(this.div);
-
-        this.transform.appendChild(this.shape);
-
-        return this.transform.div;
-    }
-
-    setColor(color){
-        this.material.div.setAttribute("diffusecolor", color);
-    }
-
-    translate(translation){
-        this.transform.div.setAttribute("translation", translation);
-    }
-}
 
 class uTransform{
     constructor(params={}){
@@ -198,7 +166,7 @@ class uTransform{
 }
 
 
-class uBox extends uPrimitive{
+class uBox{
     constructor(params={}){
         let defaults = {
             solid: true,
@@ -207,14 +175,29 @@ class uBox extends uPrimitive{
             size: "2,2,2",
             hashelpercolors: false
         }
-        params = {...defaults, ...params};
+        this.params = {...defaults, ...params};
 
-        super(params, "box");
-        
+        this.div = document.createElement("box");
+        setAttributes(this.div, this.params);
+        this.shape = new uShape();
+        this.appearance = new uAppearance();
+        this.material = new uMaterial();
+
+        this.transform = new uTransform();
+    }
+
+    assemble(){
+        this.appearance.div.appendChild(this.material.div);
+        this.shape.div.appendChild(this.appearance.div);
+        this.shape.div.appendChild(this.div);
+
+        this.transform.appendChild(this.shape);
+
+        return this.transform.div;
     }
 }
 
-class uSphere extends uPrimitive{
+class uSphere{
     constructor(params={}){
         let defaults = {
             solid: true,
@@ -224,9 +207,26 @@ class uSphere extends uPrimitive{
             radius: 1.41,
             subdivision: "24,24"
         }
-        params = {...defaults, ...params};
+        this.params = {...defaults, ...params};
 
-        super(params, "sphere");
+        this.div = document.createElement("sphere");
+        setAttributes(this.div, this.params);
+        this.shape = new uShape();
+        this.appearance = new uAppearance();
+        this.material = new uMaterial({
+            diffusecolor:"0 1 0"
+        });
+
+        this.transform = new uTransform();
     }
 
+    assemble(){
+        this.appearance.div.appendChild(this.material.div);
+        this.shape.div.appendChild(this.appearance.div);
+        this.shape.div.appendChild(this.div);
+        
+        this.transform.appendChild(this.shape);
+
+        return this.transform.div;
+    }
 }
