@@ -162,12 +162,15 @@ class uPrimitive {
         return this.transform.div;
     }
 
-    setColor(color){
-        this.material.div.setAttribute("diffusecolor", color);
+    setColor(r, g, b){
+        r = r/255;
+        g = g/255;
+        b = b/255;
+        this.material.div.setAttribute("diffusecolor", `${r} ${g} ${b}`);
     }
 
-    translate(translation){
-        this.transform.div.setAttribute("translation", translation);
+    translate(x, y, z){
+        this.transform.div.setAttribute("translation", `${x} ${y} ${z}`);
     }
 }
 
