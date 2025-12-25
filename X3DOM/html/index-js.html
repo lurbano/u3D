@@ -34,6 +34,8 @@
 
   //box.transform.div.setAttribute("translation", "3 0 0");
   box.translate(2.5, 0, 0);
+  //box.rotateZ(30);
+  box.rotate(0,30,30);
 
   sphere = new uSphere();
   sphere.setColor(10, 150, 255);
@@ -44,6 +46,8 @@
 
   cone = new uCone();
   cone.setColor(255, 150, 10);
+  //cone.rotateAxisAngle(1, 0, 0, 90);
+  
   u3x.add(cone);
 
   cylinder = new uCylinder();

@@ -172,6 +172,33 @@ class uPrimitive {
     translate(x, y, z){
         this.transform.div.setAttribute("translation", `${x} ${y} ${z}`);
     }
+
+    rotateAxisAngle(x=0, y=0, z=0, t=0){
+        t = t * Math.PI/180
+        this.transform.div.setAttribute("rotation", `${x} ${y} ${z} ${t}`);
+    }
+
+    rotateX(t=0){
+        t = t * Math.PI/180
+        
+        this.transform.div.setAttribute("rotation", `0 1 0 ${t}`);
+    }
+    rotateY(t=0){
+        t = t * Math.PI/180
+        this.transform.div.setAttribute("rotation", `0 0 1 ${t}`);
+    }
+    rotateZ(t=0){
+        t = t * Math.PI/180
+        this.transform.div.setAttribute("rotation", `1 0 0 ${t}`);
+    }
+
+    rotate(rx=0, ry=0, rz=0){ // angles in degrees for rotation about x-axis, y-axis, and z-axis
+        let r = eulerToAxisAngle(rx, ry, rz); 
+        let angle = r.angle * 180 / Math.PI;
+        let axis = r.axis;
+        this.rotateAxisAngle(axis.x, axis.y, axis.z, angle)
+
+    }
 }
 
 class uTransform{
@@ -271,4 +298,56 @@ class uCylinder extends uPrimitive{
         super(params, "cylinder");
     }
 
+}
+
+
+
+
+
+function eulerToAxisAngle(rx, ry, rz) {
+    //adapted from chatGPT
+
+  rx = rx * Math.PI/180;
+  ry = ry * Math.PI/180;
+  rz = rz * Math.PI/180;
+  // Step 1: compute rotation matrix from Euler angles (X → Y → Z)
+  const cx = Math.cos(rx), sx = Math.sin(rx);
+  const cy = Math.cos(ry), sy = Math.sin(ry);
+  const cz = Math.cos(rz), sz = Math.sin(rz);
+
+  // Rotation matrix R = Rz * Ry * Rx
+  const m00 = cz * cy;
+  const m01 = cz * sy * sx - sz * cx;
+  const m02 = cz * sy * cx + sz * sx;
+
+  const m10 = sz * cy;
+  const m11 = sz * sy * sx + cz * cx;
+  const m12 = sz * sy * cx - cz * sx;
+
+  const m20 = -sy;
+  const m21 = cy * sx;
+  const m22 = cy * cx;
+
+  // Step 2: extract axis-angle from rotation matrix
+  const trace = m00 + m11 + m22;
+  let angle = Math.acos(Math.min(1, Math.max(-1, (trace - 1) / 2)));
+
+  // If angle is very small, return a default axis
+  if (angle < 1e-6) {
+    return {
+      angle: 0,
+      axis: { x: 1, y: 0, z: 0 }
+    };
+  }
+
+  const denom = 2 * Math.sin(angle);
+
+  const x = (m21 - m12) / denom;
+  const y = (m02 - m20) / denom;
+  const z = (m10 - m01) / denom;
+
+  return {
+    angle,
+    axis: { x, y, z }
+  };
 }
