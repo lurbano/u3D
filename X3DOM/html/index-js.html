@@ -55,6 +55,16 @@
   u3x.add(cylinder);
 
   spot.appendChild(u3x.elem);
+
+
+  document.onload = function() {
+      // Handle mouseover event on a shape
+      box.div.addEventListener('click', function(event) {
+              // Do something nice whenever mouse is over object
+              console.log("click")
+              box.setColor(0,200,20)
+          }, false);
+  };
     
 </script>
 
