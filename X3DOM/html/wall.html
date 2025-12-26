@@ -42,7 +42,13 @@
     <div>
       Resources:
 
-      Blue texture: By Emmanuel Boutet - Own work, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=1459033">https://commons.wikimedia.org/w/index.php?curid=1459033</a>
+      <ul>
+        <li>Blue texture: By Emmanuel Boutet - Own work, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=1459033">https://commons.wikimedia.org/w/index.php?curid=1459033</a></li>
+        <li>Shark vid: Video by <a href="https://pixabay.com/users/yocchi09-22039991/?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=320533">Yocchi09</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=320533">Pixabay</a></li>
+      </ul>
+      
+
+      
       
       
     </div>
@@ -59,42 +65,23 @@
     height: "500px"
   });
   
-  box = new uBox()
-  box.addTexture("./images/Gouache-bleue-blue.png")
-  u3x.add(box)
+  wallThickness = 0.25;
 
-  //box.transform.div.setAttribute("translation", "3 0 0");
-  box.translate(2.5, 0, 0);
-  //box.rotateZ(30);
-  box.rotate(0,30,30);
-
-  sphere = new uSphere();
-  sphere.setColor(10, 150, 255);
-  sphere.translate(-2.5,0,0);
-
-
-  u3x.add(sphere);
-
-  cone = new uCone();
-  cone.setColor(255, 150, 10);
-  //cone.rotateAxisAngle(1, 0, 0, 90);
-  
-  u3x.add(cone);
-
-  cylinder = new uCylinder();
-  cylinder.translate(0, 2, 0);
-  u3x.add(cylinder);
 
   spot.appendChild(u3x.elem);
 
 
   document.onload = function() {
-      // Handle mouseover event on a shape
-      cylinder.div.addEventListener('click', function(event) {
-              // Do something nice whenever mouse is over object
-              console.log("click")
-              cylinder.setColor(0,200,20)
-          }, false);
+
+    A1 = addBox(5, 3, wallThickness);
+    A1.addTexture("./images/Gouache-bleue-blue.png")
+    u3x.add(A1)
+
+    A1.translate(2.5, 1.5, 0);
+
+
+
+      
   };
     
 </script>

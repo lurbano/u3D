@@ -10,90 +10,97 @@
    </head> 
    <body> 
      <p> 
-       This is my first html page with some 3d objects. 
+       This is my first html page with:
+       <ul>
+        <li>Primatives</li>
+        <ul>
+          <li>Sphere</li>
+          <ul>
+            <li>.setColor(10, 150, 255)</li>
+            <li>.translate(-2.5,0,0)</li>
+          </ul>
+          <li>Cone</li>
+          <li>Cylinder</li>
+          <ul>
+            <li>click to change color (addEventListener)</li>
+          </ul>
+          <li>box</li>
+          <ul>
+            <li>.addTexture("./images/Gouache-bleue-blue.png")</li>
+            <li>.rotate(0,30,30) (about x,y,z axes in degrees)</li>
+          </ul>
+
+        </ul>
+       </ul>
      </p> 
 
      <div id="x3Spot">
-        here
+
      </div>
 	
-     <x3d width="500px" height="400px" style="width: 500px; height: 400px;"> 
-	   <scene id="mainScene" render="true" visible="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" bboxdisplay="false" bboxmargin="0.01" bboxcolor="1,1,0" pickmode="idBuf" dopickpass="true" shadowobjectidmapping=""> 
+     
+    <div>
+      Resources:
 
-        <!-- <shape render="true" visible="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" bboxdisplay="false" bboxmargin="0.01" bboxcolor="1,1,0" ispickable="true" idoffset="0"> 
-		   <appearance sorttype="auto" sortkey="0" alphaclipthreshold="0.1"> 
-			 <material diffusecolor="1 0 0" ambientintensity="0.2" emissivecolor="0,0,0" shininess="0.2" specularcolor="0,0,0" transparency="0"></material> 
-		   </appearance> 
-		   <box solid="true" ccw="true" usegeocache="true" lit="true" size="2,2,2" hashelpercolors="false"></box> 
-		</shape>  -->
- 
-
-        <transform translation="-3 0 0" render="true" visible="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" bboxdisplay="false" bboxmargin="0.01" bboxcolor="1,1,0" center="0,0,0" rotation="0,0,0,0" scale="1,1,1" scaleorientation="0,0,0,0">  
-            <shape render="true" visible="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" bboxdisplay="false" bboxmargin="0.01" bboxcolor="1,1,0" ispickable="true" idoffset="0"> 
-                <appearance sorttype="auto" sortkey="0" alphaclipthreshold="0.1"> 
-                <material diffusecolor=".1 1 0" ambientintensity="0.2" emissivecolor="0,0,0" shininess="0.2" specularcolor="0,0,0" transparency="0"></material> 
-            </appearance> 
-            
-                <IndexedFaceSet ccw="true"
-                        colorIndex="0, 1, 0, -1, 0, 2, 0, -1"
-                        colorPerVertex="true"
-                        convex="true"
-                        coordIndex="0, 1, 3, -1, 0, 2, 3, -1"
-                        creaseAngle="0.0"
-                        normalIndex="0, 1, 3, -1, 0, 2, 3, -1"
-                        normalPerVertex="true"
-                        solid="true>
-                    <Color color="0.2 0.2 0.2, 0.4 0.4 0.4, 0.6 0.6 0.6"/>
-                    <Coordinate point="0 0 0, 1 0 0, 1 0 -1, 0.5 1 0"/>
-                    <Normal vector="0 0 1, 0 0 1, 0 0 1, 0 0 1"/>
-                </IndexedFaceSet>
-            </shape>
-        </transform> 
-
-		<transform translation="3 0 0" render="true" visible="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" bboxdisplay="false" bboxmargin="0.01" bboxcolor="1,1,0" center="0,0,0" rotation="0,0,0,0" scale="1,1,1" scaleorientation="0,0,0,0"> 
-		  <shape render="true" visible="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" bboxdisplay="false" bboxmargin="0.01" bboxcolor="1,1,0" ispickable="true" idoffset="0"> 
-			 <appearance sorttype="auto" sortkey="0" alphaclipthreshold="0.1"> 
-			   <material diffusecolor="0 0 1" ambientintensity="0.2" emissivecolor="0,0,0" shininess="0.2" specularcolor="0,0,0" transparency="0"></material> 
-			 </appearance> 
-			 <sphere solid="true" ccw="true" usegeocache="true" lit="true" radius="1" subdivision="24,24"></sphere> 
-		  </shape> 
-		</transform> 
-        
-        </scene> 
-
-	    <canvas class="x3dom-canvas" id="x3dom-canvas" style="width: 500px; height: 400px;" width="500" height="400" tabindex="0"></canvas>
-
-    </x3d> 
-    
+      Blue texture: By Emmanuel Boutet - Own work, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=1459033">https://commons.wikimedia.org/w/index.php?curid=1459033</a>
+      
+      
+    </div>
  
 </body>
 
 
 <script>
 
-    myScene = document.getElementById("mainScene");
+  spot = document.getElementById("x3Spot");
 
-    newShape = document.createElement("shape");
-    newShape.setAttribute("render", true);
-    newShape.setAttribute("visible", true);
-    newShape.setAttribute("bboxcenter", "0 0 0");
+  u3x = new ux3d({
+    width: "800px",
+    height: "500px"
+  });
+  
+  box = new uBox()
+  box.addTexture("./images/Gouache-bleue-blue.png")
+  u3x.add(box)
 
-    newAp = document.createElement("appearance");
+  //box.transform.div.setAttribute("translation", "3 0 0");
+  box.translate(2.5, 0, 0);
+  //box.rotateZ(30);
+  box.rotate(0,30,30);
 
-      newMat = document.createElement("material");
-      newMat.setAttribute("diffusecolor", "1 0 0");
-    newAp.appendChild(newMat);
+  sphere = new uSphere();
+  sphere.setColor(10, 150, 255);
+  sphere.translate(-2.5,0,0);
 
-    newBox = document.createElement("box");
-    newBox.setAttribute("solid", true);
-    newBox.setAttribute("size", "2 2 2");
 
-    newShape.appendChild(newAp);
-    newShape.appendChild(newBox);
+  u3x.add(sphere);
 
-    myScene.appendChild(newShape);
+  cone = new uCone();
+  cone.setColor(255, 150, 10);
+  //cone.rotateAxisAngle(1, 0, 0, 90);
+  
+  u3x.add(cone);
+
+  cylinder = new uCylinder();
+  cylinder.translate(0, 2, 0);
+  u3x.add(cylinder);
+
+  spot.appendChild(u3x.elem);
+
+
+  document.onload = function() {
+      // Handle mouseover event on a shape
+      cylinder.div.addEventListener('click', function(event) {
+              // Do something nice whenever mouse is over object
+              console.log("click")
+              cylinder.setColor(0,200,20)
+          }, false);
+  };
     
 </script>
 
 
+
+
 </html>
+

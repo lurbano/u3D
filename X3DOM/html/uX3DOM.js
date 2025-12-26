@@ -232,6 +232,40 @@ class uTransform{
     }
 }
 
+class uLine extends uPrimitive{
+    constructor(params={}){
+        let defaults = {
+            solid: true,
+            ccw: true,
+            usegeocache:"true",
+            coordinate: "2,2,2",
+            hashelpercolors: false
+        }
+        params = {...defaults, ...params};
+
+        super(params, "lineset");
+        
+    }
+}
+
+class uCoordinate {
+    constructor(params={}){
+        let defaults = {
+            point: "0 0 0  1 0 0"
+        }
+        params = {...defaults, ...params};
+
+        this.div = document.createElement("coordinate");
+        setAttributes(this.div, this.params);
+        
+    }
+}
+
+function addBox(x=1,y=1,z=1){
+    return new uBox({
+        size: `${x} ${y} ${z}`
+    })
+}
 
 class uBox extends uPrimitive{
     constructor(params={}){
