@@ -197,7 +197,12 @@ class uPrimitive {
         let angle = r.angle * 180 / Math.PI;
         let axis = r.axis;
         this.rotateAxisAngle(axis.x, axis.y, axis.z, angle)
+    }
 
+    addTexture(fname){
+        let div = document.createElement("ImageTexture");
+        div.setAttribute("url", fname);
+        this.appearance.div.appendChild(div);
     }
 }
 

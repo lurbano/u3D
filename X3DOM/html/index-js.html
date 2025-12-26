@@ -10,15 +10,42 @@
    </head> 
    <body> 
      <p> 
-       This is my first html page with some 3d objects. 
+       This is my first html page with:
+       <ul>
+        <li>Primatives</li>
+        <ul>
+          <li>Sphere</li>
+          <ul>
+            <li>.setColor(10, 150, 255)</li>
+            <li>.translate(-2.5,0,0)</li>
+          </ul>
+          <li>Cone</li>
+          <li>Cylinder</li>
+          <ul>
+            <li>click to change color (addEventListener)</li>
+          </ul>
+          <li>box</li>
+          <ul>
+            <li>.addTexture("./images/Gouache-bleue-blue.png")</li>
+            <li>.rotate(0,30,30) (about x,y,z axes in degrees)</li>
+          </ul>
+
+        </ul>
+       </ul>
      </p> 
 
      <div id="x3Spot">
-        here
+
      </div>
 	
      
-    
+    <div>
+      Resources:
+
+      Blue texture: By Emmanuel Boutet - Own work, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=1459033">https://commons.wikimedia.org/w/index.php?curid=1459033</a>
+      
+      
+    </div>
  
 </body>
 
@@ -27,9 +54,13 @@
 
   spot = document.getElementById("x3Spot");
 
-  u3x = new ux3d();
+  u3x = new ux3d({
+    width: "800px",
+    height: "500px"
+  });
   
   box = new uBox()
+  box.addTexture("./images/Gouache-bleue-blue.png")
   u3x.add(box)
 
   //box.transform.div.setAttribute("translation", "3 0 0");
@@ -59,14 +90,16 @@
 
   document.onload = function() {
       // Handle mouseover event on a shape
-      box.div.addEventListener('click', function(event) {
+      cylinder.div.addEventListener('click', function(event) {
               // Do something nice whenever mouse is over object
               console.log("click")
-              box.setColor(0,200,20)
+              cylinder.setColor(0,200,20)
           }, false);
   };
     
 </script>
+
+
 
 
 </html>
