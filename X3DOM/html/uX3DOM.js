@@ -379,6 +379,31 @@ class uCylinder extends uPrimitive{
 }
 
 
+class uViewpoint{
+    constructor(params={}){
+        let defaults = {
+            bind: false,
+            position: "0. 0. 10.",
+            orientation: "0. 0. 0. 0.",
+            centerOfRotation: "0. 0. 0.",
+            fieldOfView:"0.78540"
+        }
+        this.params = {...defaults, ...params};
+        this.div = document.createElement('viewpoint');
+        setAttributes(this.div, this.params);
+        
+    }
+
+    assemble(){
+        console.log('viewpoint:', this.div)
+        return this.div;
+    }
+
+    bind(){
+        console.log('reset view')
+        this.div.setAttribute("set_bind", true);
+    }
+}
 
 
 
