@@ -2,10 +2,10 @@
 console.log("x")
 
 function setAttributes(elem, props){
-    console.log("props", props);
+    // console.log("props", props);
     for (const [prop, val] of Object.entries(props)){
 
-        console.log(prop, val)
+        // console.log(prop, val)
         elem.setAttribute(prop, val);
         
     }
@@ -169,6 +169,13 @@ class uPrimitive {
         this.material.div.setAttribute("diffusecolor", `${r} ${g} ${b}`);
     }
 
+    setEmissiveColor(r, g, b){
+        r = r/255;
+        g = g/255;
+        b = b/255;
+        this.material.div.setAttribute("emissiveColor", `${r} ${g} ${b}`);
+    }
+
     translate(x, y, z){
         this.transform.div.setAttribute("translation", `${x} ${y} ${z}`);
     }
@@ -232,19 +239,46 @@ class uTransform{
     }
 }
 
+function addLine(pts){
+    txt = '';
+    for (pt of pts){
+        console.log(pt);
+        const x = pt[0];
+        const y = pt[1];
+        const z = pt[2];
+
+        txt += `${x},${y},${z} `
+    }
+    console.log("txt", txt);
+
+    coords = new uCoordinate({
+        point: txt
+    })
+    console.log("line")
+    line = new uLine();
+    
+    line.addCoords(coords)
+    
+    return line;
+}
+
 class uLine extends uPrimitive{
     constructor(params={}){
         let defaults = {
             solid: true,
             ccw: true,
             usegeocache:"true",
-            coordinate: "2,2,2",
             hashelpercolors: false
         }
         params = {...defaults, ...params};
 
         super(params, "lineset");
         
+    }
+
+    addCoords(uCoord){
+        this.coords = uCoord;
+        this.div.appendChild(uCoord.div);
     }
 }
 
@@ -253,7 +287,7 @@ class uCoordinate {
         let defaults = {
             point: "0 0 0  1 0 0"
         }
-        params = {...defaults, ...params};
+        this.params = {...defaults, ...params};
 
         this.div = document.createElement("coordinate");
         setAttributes(this.div, this.params);

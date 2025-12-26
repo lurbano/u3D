@@ -30,6 +30,11 @@
             <li>.rotate(0,30,30) (about x,y,z axes in degrees)</li>
           </ul>
 
+          <li>line (xAxis)</li>
+          <ul>
+            <li>setEmissiveColor</li>
+          </ul>
+
         </ul>
        </ul>
      </p> 
@@ -85,6 +90,11 @@
   cylinder.translate(0, 2, 0);
   u3x.add(cylinder);
 
+
+  
+
+
+
   spot.appendChild(u3x.elem);
 
 
@@ -95,6 +105,12 @@
               console.log("click")
               cylinder.setColor(0,200,20)
           }, false);
+
+      xAxis = addLine([[0,0,0], [1,0,0]]);
+      xAxis.translate(0,-2,0);
+      xAxis.setEmissiveColor(255,0,0);
+      u3x.add(xAxis);
+
   };
     
 </script>
