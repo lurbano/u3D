@@ -258,6 +258,8 @@ function addLine(pts){
     line = new uLine();
     
     line.addCoords(coords)
+    line.setVertexCount(pts.length);
+
     
     return line;
 }
@@ -279,6 +281,9 @@ class uLine extends uPrimitive{
     addCoords(uCoord){
         this.coords = uCoord;
         this.div.appendChild(uCoord.div);
+    }
+    setVertexCount(n){
+        this.div.setAttribute("vertexCount", n);
     }
 }
 
