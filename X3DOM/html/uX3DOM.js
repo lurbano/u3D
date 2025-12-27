@@ -214,6 +214,12 @@ class uPrimitive {
         div.setAttribute("url", fname);
         this.appearance.div.appendChild(div);
     }
+
+    addVideo(fname){
+        let div = document.createElement("MovieTexture");
+        div.setAttribute("url", fname);
+        this.appearance.div.appendChild(div);
+    }
 }
 
 class uTransform{

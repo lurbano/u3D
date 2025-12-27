@@ -34,6 +34,7 @@
           <ul>
             <li>setEmissiveColor</li>
           </ul>
+          <li>axes</li>
 
         </ul>
        </ul>
@@ -91,8 +92,6 @@
   });
   u3x.add(view2); 
 
-  // <Viewpoint position="1.36474 9.50507 2.79127" orientation="-0.98675 0.16035 0.02462 1.28837" 
-	// zNear="3.61601" zFar="17.39379" centerOfRotation="0.00000 0.00000 0.00000" fieldOfView="0.78540" description="StartView"></Viewpoint> 
   
   box = new uBox()
   box.addTexture("./images/Gouache-bleue-blue.png")
@@ -102,6 +101,11 @@
   box.translate(2.5, 0, 0);
   //box.rotateZ(30);
   box.rotate(0,30,30);
+
+  vidBox = new uBox();
+  vidBox.translate(-2.5, 2.5, 0);
+  vidBox.addVideo("./videos/320533_tiny.mp4")
+  u3x.add(vidBox);
 
   sphere = new uSphere();
   sphere.setColor(10, 150, 255);
@@ -114,7 +118,7 @@
   cone.setColor(255, 150, 10);
   //cone.rotateAxisAngle(1, 0, 0, 90);
   
-  //u3x.add(cone);
+  u3x.add(cone);
 
   cylinder = new uCylinder();
   cylinder.translate(0, 2, 0);
@@ -131,23 +135,10 @@
   document.onload = function() {
       // Handle mouseover event on a shape
       cylinder.div.addEventListener('click', function(event) {
-              // Do something nice whenever mouse is over object
-              console.log("click")
               cylinder.setColor(0,200,20)
           }, false);
 
-      // xAxis = addLine([[0,0,0], [1,0,0]]);
-      // // xAxis.translate(0,-2,0);
-      // xAxis.setEmissiveColor(255,0,0);
-      // u3x.add(xAxis);
-      // yAxis = addLine([[0,0,0], [0,1,0]]);
-      // // yAxis.translate(0,-2,0);
-      // yAxis.setEmissiveColor(0,255,0);
-      // u3x.add(yAxis);
-      // zAxis = addLine([[0,0,0], [0,0,1]]);
-      // // zAxis.translate(0,-2,0);
-      // zAxis.setEmissiveColor(0,0,255);
-      // u3x.add(zAxis);
+ 
 
       xyzAxes = new uAxes();
       xyzAxes.translate(0,-2, 0);
@@ -165,8 +156,7 @@
     
 </script>
 
-<!-- <Viewpoint position="0.00000 0.00000 10.00000" orientation="0.00000 0.00000 0.00000 0.00000" 
-	zNear="4.02081" zFar="18.00099" centerOfRotation="0.00000 0.00000 0.00000" fieldOfView="0.78540"  -->
+
 
 
 
