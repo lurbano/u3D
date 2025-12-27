@@ -42,6 +42,8 @@ class ux3d {
 class uScene {
     constructor(params={}){
         let defaults = {
+            DEF: "scene",
+            description: "startPos",
             render: true,
             visible: true,
             bboxcenter: '0,0,0',
@@ -382,7 +384,7 @@ class uCylinder extends uPrimitive{
 class uViewpoint{
     constructor(params={}){
         let defaults = {
-            bind: false,
+            //bind: false,
             position: "0. 0. 10.",
             orientation: "0. 0. 0. 0.",
             centerOfRotation: "0. 0. 0.",
@@ -391,6 +393,7 @@ class uViewpoint{
         this.params = {...defaults, ...params};
         this.div = document.createElement('viewpoint');
         setAttributes(this.div, this.params);
+        //this.div.setAttribute("id", "viewpointTest");
         
     }
 
@@ -401,7 +404,10 @@ class uViewpoint{
 
     bind(){
         console.log('reset view')
-        this.div.setAttribute("set_bind", true);
+        console.log(this.div);
+        //this.div.setAttribute("bind", 'true');
+        this.div.setAttribute('set_bind','true');
+        console.log("bind", this.div);
     }
 }
 

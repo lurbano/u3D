@@ -39,11 +39,15 @@
        </ul>
      </p> 
 
+     <input id="resetView" type="button" value="resetView" >
+
+     <input type="button" value="top_cam" onclick="document.getElementById('top_cam').setAttribute('set_bind','true');">
+
      <div id="x3Spot">
 
      </div>
 
-     <input id="resetView" type="button" value="Reset View">
+     
 	
      
     <div>
@@ -59,12 +63,36 @@
 
 <script>
 
+  function bindView(id) {
+    document.getElementById(id).setAttribute("set_bind", "true");
+  }
+
   spot = document.getElementById("x3Spot");
 
   u3x = new ux3d({
     width: "800px",
     height: "500px"
   });
+
+  view1 = new uViewpoint({
+    description: "StartView"
+  })
+  u3x.add(view1);
+
+  view2 = new uViewpoint({
+    id:"top_cam",
+    description: "top_cam",
+    orientation:"-0.98675 0.16035 0.02462 1.28837",
+    position:"1.36474 9.50507 2.79127",
+    fieldofview: "0.78540",
+    centerofrotation: "0,0,0",
+    znear:"-1",
+    zfar:"-1"
+  });
+  u3x.add(view2); 
+
+  // <Viewpoint position="1.36474 9.50507 2.79127" orientation="-0.98675 0.16035 0.02462 1.28837" 
+	// zNear="3.61601" zFar="17.39379" centerOfRotation="0.00000 0.00000 0.00000" fieldOfView="0.78540" description="StartView"></Viewpoint> 
   
   box = new uBox()
   box.addTexture("./images/Gouache-bleue-blue.png")
@@ -113,10 +141,13 @@
       xAxis.setEmissiveColor(255,0,0);
       u3x.add(xAxis);
 
-      view1 = new uViewpoint()
-      u3x.add(view1);
       
-      resetView.addEventListener("click", function(){
+
+      // resetView.addEventListener("click", function(){
+      //   view1.bind();
+      // })
+
+      document.getElementById("resetView").addEventListener("click", function(){
         view1.bind();
       })
 
@@ -126,6 +157,7 @@
 
 <!-- <Viewpoint position="0.00000 0.00000 10.00000" orientation="0.00000 0.00000 0.00000 0.00000" 
 	zNear="4.02081" zFar="18.00099" centerOfRotation="0.00000 0.00000 0.00000" fieldOfView="0.78540"  -->
+
 
 
 </html>
