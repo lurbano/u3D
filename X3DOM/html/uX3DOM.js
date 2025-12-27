@@ -179,7 +179,8 @@ class uPrimitive {
     }
 
     translate(x, y, z){
-        this.transform.div.setAttribute("translation", `${x} ${y} ${z}`);
+        //this.transform.div.setAttribute("translation", `${x} ${y} ${z}`);
+        this.transform.translate(x,y,z);
     }
 
     rotateAxisAngle(x=0, y=0, z=0, t=0){
@@ -239,7 +240,41 @@ class uTransform{
     appendChild(uObj){
         this.div.appendChild(uObj.div);
     }
+
+    translate(x,y,z){
+        this.div.setAttribute("translation", `${x} ${y} ${z}`);
+    }
 }
+
+
+class uAxes {
+    constructor(params={}){
+        this.axes = new uTransform();
+        // this.group = document.createElement("group");
+        // this.axes.div.appendChild(this.group);
+
+        this.xAxis = addLine([[0,0,0], [1,0,0]]);
+        this.xAxis.setEmissiveColor(255,0,0);
+        this.yAxis = addLine([[0,0,0], [0,1,0]]);
+        this.yAxis.setEmissiveColor(0,255,0);
+        this.zAxis = addLine([[0,0,0], [0,0,1]]);
+        this.zAxis.setEmissiveColor(0,0,255);
+
+        this.axes.div.appendChild(this.xAxis.assemble());
+        this.axes.div.appendChild(this.yAxis.assemble());
+        this.axes.div.appendChild(this.zAxis.assemble());
+    }
+
+    assemble(){
+        return this.axes.div;
+    }
+
+    translate(x,y,z){
+        this.axes.translate(x,y,z);
+    }
+
+}
+
 
 function addLine(pts){
     txt = '';
@@ -264,6 +299,19 @@ function addLine(pts){
 
     
     return line;
+}
+
+class uGroup extends uPrimitive{
+    constructor(params={}){
+        let defaults = {};
+        params = {...defaults, ...params};
+
+        super(params, "group");
+    }
+
+    appendChild(uObj){
+        this.div.appendChild(uObj.div);
+    }
 }
 
 class uLine extends uPrimitive{

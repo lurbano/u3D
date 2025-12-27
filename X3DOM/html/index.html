@@ -114,7 +114,7 @@
   cone.setColor(255, 150, 10);
   //cone.rotateAxisAngle(1, 0, 0, 90);
   
-  u3x.add(cone);
+  //u3x.add(cone);
 
   cylinder = new uCylinder();
   cylinder.translate(0, 2, 0);
@@ -122,7 +122,7 @@
 
 
   
-
+  
 
 
   spot.appendChild(u3x.elem);
@@ -136,12 +136,22 @@
               cylinder.setColor(0,200,20)
           }, false);
 
-      xAxis = addLine([[0,0,0], [1,0,0]]);
-      xAxis.translate(0,-2,0);
-      xAxis.setEmissiveColor(255,0,0);
-      u3x.add(xAxis);
+      // xAxis = addLine([[0,0,0], [1,0,0]]);
+      // // xAxis.translate(0,-2,0);
+      // xAxis.setEmissiveColor(255,0,0);
+      // u3x.add(xAxis);
+      // yAxis = addLine([[0,0,0], [0,1,0]]);
+      // // yAxis.translate(0,-2,0);
+      // yAxis.setEmissiveColor(0,255,0);
+      // u3x.add(yAxis);
+      // zAxis = addLine([[0,0,0], [0,0,1]]);
+      // // zAxis.translate(0,-2,0);
+      // zAxis.setEmissiveColor(0,0,255);
+      // u3x.add(zAxis);
 
-      
+      xyzAxes = new uAxes();
+      xyzAxes.translate(0,-2, 0);
+      u3x.add(xyzAxes);
 
       // resetView.addEventListener("click", function(){
       //   view1.bind();
