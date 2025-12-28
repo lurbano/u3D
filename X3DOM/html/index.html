@@ -28,9 +28,12 @@
           <ul>
             <li>.addTexture("./images/Gouache-bleue-blue.png")</li>
             <li>.rotate(0,30,30) (about x,y,z axes in degrees)</li>
-            <li>.addVideo("./videos/320533_tiny.mp4")</li>
           </ul>
-
+          <li>vidBox (box with video texture)</li>
+          <ul>
+            <li>.addVideo("./videos/320533_tiny.mp4")</li>
+            <li>vidBox.video.play(): event listener added so play when box is clicked.</li>
+          </ul>
           <li>line (triangle)</li>
           <ul>
             <li>.setEmissiveColor</li>
@@ -174,6 +177,11 @@
 
       document.getElementById("showAxes").addEventListener("click", function(){
         xyzAxes.switchVisibility();
+      })
+
+      vidBox.div.addEventListener("click", function(){
+        console.log("clicked")
+        vidBox.video.play();
       })
 
   };

@@ -215,19 +215,46 @@ class uPrimitive {
         this.appearance.div.appendChild(div);
     }
 
+    // addVideo(fname){
+    //     let div = document.createElement("MovieTexture");
+    //     div.setAttribute("url", fname);
+    //     this.appearance.div.appendChild(div);
+    // }
+
     addVideo(fname){
-        let div = document.createElement("MovieTexture");
-        div.setAttribute("url", fname);
-        this.appearance.div.appendChild(div);
+        this.video = new uMovieTexture({
+            url: fname
+        })
+
+        this.appearance.div.appendChild(this.video.div);
     }
 
     isVisible(){
         return this.transform.isVisible();
     }
 
-    // hide(){
-    //     this.transform.div.setAttribute("visible", false);
-    // }
+}
+
+class uMovieTexture{
+    constructor(params={}){
+        let defaults = {
+
+        }
+        this.params = {...defaults, ...params};
+        this.div = document.createElement("MovieTexture");
+        setAttributes(this.div, this.params);
+
+    }
+
+    play(){
+        const video = this.div._x3domNode._video;
+        video.currentTime = 0; // optional rewind
+        video.play();
+    }
+    stop(){
+        const video = this.div._x3domNode._video;
+        video.pause();
+    }
 }
 
 class uTransform{
