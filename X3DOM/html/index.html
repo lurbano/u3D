@@ -126,6 +126,7 @@
   box.translate(2.5, 0, 0);
   box.rotate(0,30,30);
 
+  // VIDEO BOX
   vidBox = new uBox();
   vidBox.translate(-2.5, 2.5, 0);
   vidBox.addVideo("./videos/320533_tiny.mp4")
@@ -136,6 +137,7 @@
   sphere = new uSphere();
   sphere.setColor(10, 150, 255);
   sphere.translate(-2.5,0,0);
+  sphere.addSound('./sounds/under-water-splash-3.mp3')
 
   u3x.add(sphere);
 
@@ -182,6 +184,18 @@
       vidBox.div.addEventListener("click", function(){
         console.log("clicked")
         vidBox.video.play();
+      })
+
+      sphere.div.addEventListener('click', function(){
+        
+        console.log ("sound sphere clicked", this.sound.audioclip.div);
+        this.sound.play();
+        //sphere.sound.audioclip.div.setAttribute("stopTime", Date.now()/1000);
+        //sphere.sound.audioclip.div.setAttribute("startTime", Date.now()/1000 + 0.1);
+
+
+        //console.log("next", sphere.sound.audioclip.div);
+
       })
 
   };

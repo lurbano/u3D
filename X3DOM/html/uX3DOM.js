@@ -233,6 +233,54 @@ class uPrimitive {
         return this.transform.isVisible();
     }
 
+    addSound(fname){
+        this.sound = new uSound({
+            url: fname
+        })
+        this.transform.appendChild(this.sound);
+    }
+
+}
+
+class uSound {
+    constructor(params={}) {
+        let defaults = {
+        }
+        this.params = {...defaults, ...params};
+        this.div = document.createElement("sound");
+
+        this.audioclip = new uAudioclip({
+            url: this.params.url
+        })
+        this.appendChild(this.audioclip);
+    }
+
+    appendChild(uObj){
+        this.div.appendChild(uObj.div);
+    }
+
+    play(){
+        console.log(playing);
+        this.audioclip.div.setAttribute("startTime", Date.now() / 1000);
+    }
+
+    stop(){
+        this.audioclip.div.setAttribute("stopTime", Date.now() / 1000);
+    }
+}
+
+class uAudioclip {
+    constructor(params={}) {
+        let defaults = {
+            loop: 'false',
+            enabled: 'true'
+        }
+        this.params = {...defaults, ...params};
+        this.div = document.createElement("audioclip");
+
+        setAttributes(this.div, this.params );
+        
+    }
 }
 
 class uMovieTexture{
