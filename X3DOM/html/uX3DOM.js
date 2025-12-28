@@ -220,6 +220,14 @@ class uPrimitive {
         div.setAttribute("url", fname);
         this.appearance.div.appendChild(div);
     }
+
+    isVisible(){
+        return this.transform.isVisible();
+    }
+
+    // hide(){
+    //     this.transform.div.setAttribute("visible", false);
+    // }
 }
 
 class uTransform{
@@ -250,6 +258,18 @@ class uTransform{
     translate(x,y,z){
         this.div.setAttribute("translation", `${x} ${y} ${z}`);
     }
+
+    isVisible(){
+        return this.div.getAttribute("render") === "true" ? true : false;
+    }
+
+    hide(){
+        this.div.setAttribute("render",'false');
+    }
+
+    show(){
+        this.div.setAttribute("render",'true');
+    }
 }
 
 
@@ -279,25 +299,34 @@ class uAxes {
         this.axes.translate(x,y,z);
     }
 
+    switchVisibility(){
+        let vis = this.axes.isVisible();
+        console.log(vis);
+
+        if (this.axes.isVisible()){
+            this.axes.hide();
+        } else {
+            this.axes.show();
+        }
+    }
+
 }
 
 
 function addLine(pts){
     txt = '';
     for (pt of pts){
-        console.log(pt);
         const x = pt[0];
         const y = pt[1];
         const z = pt[2];
 
         txt += `${x},${y},${z} `
     }
-    console.log("txt", txt);
-
+    
     coords = new uCoordinate({
         point: txt
     })
-    console.log("line")
+    
     line = new uLine();
     
     line.addCoords(coords)
@@ -452,7 +481,6 @@ class uViewpoint{
     }
 
     assemble(){
-        console.log('viewpoint:', this.div)
         return this.div;
     }
 
