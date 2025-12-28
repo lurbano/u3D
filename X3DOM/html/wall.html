@@ -34,6 +34,10 @@
        </ul>
      </p> 
 
+     <input id="start_View" type="button" value="Start" class="view">
+     <input id="door_View" type="button" value="Door" class="view">
+     <input id="top_View" type="button" value="Top" class="view">
+
      <div id="x3Spot">
 
      </div>
@@ -80,7 +84,56 @@
     A1.translate(2.5, 1.5, 0);
 
 
+    // Views
+    view0 = new uViewpoint({
+        id:"startView",
+        description: "startView",
+        orientation:"-0.98706 -0.14233 -0.07391 0.14880",
+        position:"-0.20292 1.46456 9.89009",
+        fieldofview: "0.78540",
+        centerofrotation: "0,0,0",
+        znear:"-1",
+        zfar:"-1"
+    })
 
+    view1 = new uViewpoint({
+        id:"doorView",
+        description: "doorView",
+        orientation:"-0.05309 -0.99132 -0.12030 1.50989",
+        position:"-9.83480 1.64990 0.74463",
+        fieldofview: "0.78540",
+        centerofrotation: "0,0,0",
+        znear:"-1",
+        zfar:"-1"
+    });
+
+    view2 = new uViewpoint({
+        id:"topView",
+        description: "topView",
+        orientation:"-0.98675 0.16035 0.02462 1.28837",
+        position:"1.36474 9.50507 2.79127",
+        fieldofview: "0.78540",
+        centerofrotation: "0,0,0",
+        znear:"-1",
+        zfar:"-1"
+    });
+
+    u3x.add(view0);
+    u3x.add(view1);
+    u3x.add(view2);
+
+    viewButtons = document.getElementsByClassName('view');
+    console.log(viewButtons)
+
+    for (let i =0; i<viewButtons.length; i++){
+        let element = viewButtons[i];
+        element.addEventListener("click", function(){
+            vid = element.id.replace("_", "");
+            console.log("vid", vid)
+            document.getElementById(vid).setAttribute("set_bind", 'true');
+        })
+    }
+   
       
   };
     
