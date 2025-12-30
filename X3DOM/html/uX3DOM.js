@@ -267,7 +267,7 @@ class uSound {
     play(){
         this.stop();
         this.audioclip.div.setAttribute('enabled', "true")
-        this.audioclip.div.play();
+        //this.audioclip.div.play();
     }
 
     stop(){
