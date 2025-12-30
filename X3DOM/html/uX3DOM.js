@@ -562,6 +562,7 @@ class uViewpoint{
     constructor(params={}){
         let defaults = {
             //bind: false,
+            description: 'none',
             position: "0. 0. 10.",
             orientation: "0. 0. 0. 0.",
             centerOfRotation: "0. 0. 0.",
@@ -571,7 +572,7 @@ class uViewpoint{
         this.div = document.createElement('viewpoint');
         setAttributes(this.div, this.params);
         //this.div.setAttribute("id", "viewpointTest");
-        
+        this.description = this.params.description;
     }
 
     assemble(){
@@ -579,13 +580,31 @@ class uViewpoint{
     }
 
     bind(){
-        console.log('reset view')
-        console.log(this.div);
-        //this.div.setAttribute("bind", 'true');
+        
         this.div.setAttribute('set_bind','true');
-        console.log("bind", this.div);
+    }
+
+    addButton(targetDiv){
+        this.button = document.createElement('input');
+        let attribs = {
+            type: 'button',
+            value: this.description
+        }
+        setAttributes(this.button, attribs);
+        this.button.addEventListener("click", () => {
+            this.bind();
+        })
+        targetDiv.appendChild(this.button);
     }
 }
+
+// class veiwPointControler{
+//     constructor(){
+//         this.viewpoints = [];
+//     }
+
+//     addButtons
+// }
 
 
 
