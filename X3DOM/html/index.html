@@ -18,6 +18,7 @@
           <ul>
             <li>.setColor(10, 150, 255)</li>
             <li>.translate(-2.5,0,0)</li>
+            <li>sphere.setClickListener(sphere): event listener to play sound when sphere is clicked.</li>
           </ul>
           <li>Cone</li>
           <li>Cylinder</li>
@@ -32,7 +33,7 @@
           <li>vidBox (box with video texture)</li>
           <ul>
             <li>.addVideo("./videos/320533_tiny.mp4")</li>
-            <li>vidBox.video.play(): event listener added so play when box is clicked.</li>
+            <li>vidBox.setClickListener(vidBox): event listener added so play when box is clicked.</li>
           </ul>
           <li>line (triangle)</li>
           <ul>
@@ -68,6 +69,7 @@
       <ul>
         <li>Blue texture: By Emmanuel Boutet - Own work, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=1459033">https://commons.wikimedia.org/w/index.php?curid=1459033</a></li>
         <li>Shark vid: Video by <a href="https://pixabay.com/users/yocchi09-22039991/?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=320533">Yocchi09</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=320533">Pixabay</a></li>
+        <li>Under Water Splash 3 by Hampusnoren -- <a href="https://freesound.org/s/147180/">https://freesound.org/s/147180/</a> -- License: Attribution 4.0</li>
       </ul>
 
       Refs:
@@ -181,22 +183,22 @@
         xyzAxes.switchVisibility();
       })
 
-      vidBox.div.addEventListener("click", function(){
-        console.log("clicked")
-        vidBox.video.play();
-      })
+      // vidBox.div.addEventListener("click", function(){
+      //   console.log("clicked")
+      //   vidBox.video.play();
+      // })
 
-      sphere.div.addEventListener('click', function(){
+      console.log(vidBox.video);
+      vidBox.video.setClickListener(vidBox);
+      
+      sphere.sound.setClickListener(sphere);
+
+      // sphere.div.addEventListener('click', function(){
         
-        console.log ("sound sphere clicked", this.sound.audioclip.div);
-        this.sound.play();
-        //sphere.sound.audioclip.div.setAttribute("stopTime", Date.now()/1000);
-        //sphere.sound.audioclip.div.setAttribute("startTime", Date.now()/1000 + 0.1);
+      //   console.log ("sound sphere clicked", this.sound.audioclip.div);
+      //   this.sound.play();
 
-
-        //console.log("next", sphere.sound.audioclip.div);
-
-      })
+      // })
 
   };
     

@@ -2,7 +2,7 @@
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=windows-1252">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-     <title>x3dom js test</title> 
+     <title>Shark Wall</title> 
      <script type="text/javascript" src="./x3dom.js"> </script> 
      <link rel="stylesheet" type="text/css" href="./x3dom.css"> 
      <script type="text/javascript" src="./uX3DOM.js"> </script> 
@@ -49,6 +49,7 @@
       <ul>
         <li>Blue texture: By Emmanuel Boutet - Own work, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=1459033">https://commons.wikimedia.org/w/index.php?curid=1459033</a></li>
         <li>Shark vid: Video by <a href="https://pixabay.com/users/yocchi09-22039991/?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=320533">Yocchi09</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=320533">Pixabay</a></li>
+        <li>Under Water Splash 3 by Hampusnoren -- <a href="https://freesound.org/s/147180/">https://freesound.org/s/147180/</a> -- License: Attribution 4.0</li>
       </ul>
       
 
@@ -82,6 +83,17 @@
     u3x.add(A1)
 
     A1.translate(2.5, 1.5, 0);
+
+    B1 = addBox(5, 3, wallThickness);
+    B1.addVideo("./videos/320533_tiny.mp4")
+    u3x.add(B1)
+
+    B1.translate(2.5, 3+1.5, 0);
+
+    //AXES
+    xyzAxes = new uAxes();
+    xyzAxes.translate(0,-2, 0);
+    u3x.add(xyzAxes);
 
 
     // Views
@@ -122,6 +134,7 @@
     u3x.add(view1);
     u3x.add(view2);
 
+
     viewButtons = document.getElementsByClassName('view');
     console.log(viewButtons)
 
@@ -133,6 +146,8 @@
             document.getElementById(vid).setAttribute("set_bind", 'true');
         })
     }
+
+    //end views
    
       
   };

@@ -116,6 +116,10 @@ class uAppearance {
         outerDiv = document.getElementById(id);
         outerDiv.appendChild(this.div);
     }
+
+    appendChild(uObj){
+        this.div.appendChild(uObj.div);
+    }
 }
 
 class uMaterial {
@@ -226,7 +230,7 @@ class uPrimitive {
             url: fname
         })
 
-        this.appearance.div.appendChild(this.video.div);
+        this.appearance.appendChild(this.video);
     }
 
     isVisible(){
@@ -245,6 +249,7 @@ class uPrimitive {
 class uSound {
     constructor(params={}) {
         let defaults = {
+            enabled: "false"
         }
         this.params = {...defaults, ...params};
         this.div = document.createElement("sound");
@@ -260,12 +265,20 @@ class uSound {
     }
 
     play(){
-        console.log(playing);
-        this.audioclip.div.setAttribute("startTime", Date.now() / 1000);
+        this.stop();
+        this.audioclip.div.setAttribute('enabled', "true")
+        this.audioclip.div.play();
     }
 
     stop(){
-        this.audioclip.div.setAttribute("stopTime", Date.now() / 1000);
+        this.audioclip.div.setAttribute("enabled", "false");
+    }
+
+    setClickListener(uObj){ // play when uObj is clicked
+        uObj.div.addEventListener("click", () => {
+            console.log("playing sound")
+            this.play();
+        });
     }
 }
 
@@ -273,7 +286,7 @@ class uAudioclip {
     constructor(params={}) {
         let defaults = {
             loop: 'false',
-            enabled: 'true'
+            enabled: 'false'
         }
         this.params = {...defaults, ...params};
         this.div = document.createElement("audioclip");
@@ -302,6 +315,12 @@ class uMovieTexture{
     stop(){
         const video = this.div._x3domNode._video;
         video.pause();
+    }
+
+    setClickListener(uObj){ // play when uObj is clicked
+        uObj.div.addEventListener("click", () => {
+            this.play();
+        });
     }
 }
 
