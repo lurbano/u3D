@@ -10,9 +10,10 @@
    </head> 
    <body> 
 
-    <p>Experiments with web-based 3d: primative shapes using X3DOM.</p>
+    <p>Experiments with web-based 3d: primitive shapes using X3DOM.</p>
 
      <input type="button" value="Show Axes" id="showAxes">
+     <input type="button" value="Export OpenSCAD" id="exportOpenSCAD">
      <br>
 
      <div id="viewButtonArea"></div>
@@ -197,6 +198,10 @@
       
       sphere.sound.setClickListener(sphere);
 
+      document.getElementById("exportOpenSCAD").addEventListener("click", function(){
+        console.log('exporting');
+        u3x.toOpenSCAD();
+      })
 
   };
     

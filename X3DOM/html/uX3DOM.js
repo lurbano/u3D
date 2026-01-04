@@ -29,11 +29,39 @@ class ux3d {
         this.scene = new uScene();
 
         this.elem.appendChild(this.scene.div);
+        this.primitives = [];
+        this.transforms = [];
 
     }
 
     add(obj){
+        this.primitives.push(obj);
+        //let transform = obj.transform;
+        this.transforms.push(obj.transform);
         this.scene.div.appendChild(obj.assemble());
+    }
+
+    toOpenSCAD(scale = 10){
+        console.log("exporting OpenSCAD format", this.transforms.length)
+        let scadString = '';
+
+        for (let i=0; i<this.primitives.length; i++){
+            let primitive = this.primitives[i]
+             //this.transforms[i];
+            //console.log("primitive", primitive.constructor.name)
+
+            
+            
+            if (primitive !== undefined && typeof primitive.toOpenSCAD === 'function'){
+                let transform = this.primitives[i].transform;
+                if (transform !== undefined && typeof transform.toOpenSCAD === 'function'){
+                    scadString += transform.toOpenSCAD(scale);
+                }
+                
+                scadString += primitive.toOpenSCAD(scale);
+            }
+        }
+        console.log("OpenScad:", scadString);
     }
 }
 
@@ -244,7 +272,33 @@ class uPrimitive {
         this.transform.appendChild(this.sound);
     }
 
+    getAttribute(attrib){
+        return this.div.getAttribute(attrib);
+    }
+
+    parse_X3DOM_vector(attrib, scale=1){
+        let str = this.div.getAttribute(attrib);
+        return parse_X3DOM_vector(str, scale);
+    }
+
 }
+
+function parse_X3DOM_vector(str, scale=1){
+    let dims = str.split(/[\s,]+/);
+    for (let i = 0; i < dims.length; i++){
+        dims[i] = parseFloat(dims[i])*scale;
+    }
+    return dims;
+}
+
+function X3DOM_to_OpenSCAD_vector(div, attrib, scale){
+    let str = div.getAttribute(attrib);
+    let dims = parse_X3DOM_vector(str, scale);
+    let OpenSCAD_str = `(${dims[0]},${dims[1]},${dims[2]})`;
+    return OpenSCAD_str;
+}
+
+
 
 class uSound {
     constructor(params={}) {
@@ -343,6 +397,20 @@ class uTransform{
         this.div = document.createElement("transform");
         setAttributes(this.div, this.params);
 
+    }
+
+    toOpenSCAD(scale){
+
+        let v = X3DOM_to_OpenSCAD_vector(this.div, 'translation', scale);
+        let scadStr = `\ntranslate${v})`
+        
+        return scadStr;
+
+    }
+
+    parse_X3DOM_vector(attrib, scale=1){
+        let str = this.div.getAttribute(attrib);
+        return parse_X3DOM_vector(str, scale);
     }
 
     appendChild(uObj){
@@ -499,7 +567,21 @@ class uBox extends uPrimitive{
         super(params, "box");
         
     }
+
+    toOpenSCAD(scale){
+        let scadStr = "";
+
+        //let dims = this.parse_X3DOM_vector("position", scale);
+
+        let dims = this.parse_X3DOM_vector("size", scale);
+        scadStr += `\n cube(${dims[0]},${dims[1]},${dims[2]});`
+
+        return scadStr;
+
+    }
 }
+
+
 
 class uSphere extends uPrimitive{
     constructor(params={}){
@@ -516,6 +598,18 @@ class uSphere extends uPrimitive{
         super(params, "sphere");
     }
 
+    toOpenSCAD(scale){
+        let scadStr = "";
+
+        //let dims = this.parse_X3DOM_vector("position", scale);
+
+        let r = parseFloat(this.div.getAttribute("radius")) * scale;
+        scadStr += `\n sphere( r = ${r});`
+
+        return scadStr;
+
+    }
+
 }
 
 class uCone extends uPrimitive{
@@ -527,11 +621,25 @@ class uCone extends uPrimitive{
             lit: true,
             bottomRadius: 1.5,
             top:true,
-            subdivision: "32"
+            subdivision: "32",
+            height: 1
         }
         params = {...defaults, ...params};
 
         super(params, "cone");
+    }
+
+    toOpenSCAD(scale){
+        let scadStr = "";
+
+        //let dims = this.parse_X3DOM_vector("position", scale);
+
+        let r = parseFloat(this.div.getAttribute("bottomRadius")) * scale;
+        let h = parseFloat(this.div.getAttribute("height")) * scale;
+        scadStr += `\n cylinder( r1 = ${r}, r2 = 0, h = ${h});`
+
+        return scadStr;
+
     }
 
 }
@@ -553,6 +661,19 @@ class uCylinder extends uPrimitive{
         params = {...defaults, ...params};
 
         super(params, "cylinder");
+    }
+
+    toOpenSCAD(scale){
+        let scadStr = "";
+
+        //let dims = this.parse_X3DOM_vector("position", scale);
+
+        let r = parseFloat(this.div.getAttribute("radius")) * scale;
+        let h = parseFloat(this.div.getAttribute("height")) * scale;
+        scadStr += `\n cylinder( r = ${r}, h = ${h});`
+
+        return scadStr;
+
     }
 
 }
