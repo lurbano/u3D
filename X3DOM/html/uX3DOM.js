@@ -41,6 +41,10 @@ class ux3d {
         this.scene.div.appendChild(obj.assemble());
     }
 
+    setNavigationMode(navMode){
+        this.scene.setNavigationMode(navMode);
+    }
+
     toOpenSCAD(scale = 10){
         console.log("exporting OpenSCAD format", this.transforms.length)
         let scadString = '';
@@ -89,11 +93,33 @@ class uScene {
         this.div = document.createElement("scene");
         setAttributes(this.div, this.params)
 
+        // add navigation element
+        this.navElem = new uNavigationInfo();
+        //console.log("Nav:", this.navElem.div);
+        this.div.appendChild(this.navElem.div);
+
+
+    }
+
+    setNavigationMode(navMode) {
+        this.navElem.div.setAttribute("type", navMode);
     }
 
     addTo(id){
         outerDiv = document.getElementById(id);
         outerDiv.appendChild(this.div);
+    }
+}
+
+class uNavigationInfo {
+    constructor(params={}){
+        let defaults = {
+            type: "walk"
+        }
+
+        this.params = {...defaults, ...params};
+        this.div = document.createElement("navigationInfo");
+        setAttributes(this.div, this.params);
     }
 }
 
