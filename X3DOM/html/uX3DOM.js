@@ -209,6 +209,7 @@ class uPrimitive {
         this.appearance = new uAppearance();
         this.material = new uMaterial();
 
+        //everything is embeded in transform
         this.transform = new uTransform();
     }
 
@@ -220,6 +221,18 @@ class uPrimitive {
         this.transform.appendChild(this.shape);
 
         return this.transform.div;
+    }
+
+    addProximitySensor(size=5){
+        this.proximitySensor = new uProximitySensor();
+        this.proximitySensor.setSize(size);
+        this.transform.div.appendChild(this.proximitySensor.div);
+        // console.log('prox1',  size, func)
+        // if (func !== undefined) {
+        //     console.log("send")
+        //     this.proximitySensor.addEventListener(event=event, func=func)
+        // }
+        
     }
 
     setColor(r, g, b){
@@ -702,6 +715,29 @@ class uCylinder extends uPrimitive{
 
     }
 
+}
+
+class uProximitySensor{
+    constructor(params={}){
+        let defaults = {
+            size: '5 5 5'
+        }
+        this.params = {...defaults, ...params};
+        this.div = document.createElement('proximitysensor');
+        setAttributes(this.div, this.params);
+    }
+
+    setSize(size){
+        this.div.setAttribute("size", `${size} ${size} ${size}`)
+    }
+
+    addEventListener(event="isActive", func=undefined){
+        console.log('prox', event, func)
+        if (func !== undefined) {
+            console.log('adding proximity sensor event')
+            this.div.addEventListener(event, func);
+        }
+    }
 }
 
 
