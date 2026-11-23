@@ -1,25 +1,136 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="./x_ite-12.2.2/x_ite.min.js"></script>
-    <title>Document</title>
+    <title>X_ITE 3D Cube</title>
+
+    <!-- Load X_ITE -->
+    <script src="./x_ite-16.8.1/x_ite.min.js"></script>
 
     <style>
+        body {
+            margin: 0;
+            background: #222;
+            font-family: Arial, sans-serif;
+        }
+
         x3d-canvas {
-            width: 768px;
-            height: 432px;
-            }
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
     </style>
 </head>
 <body>
-    Hello
-    <x3d-canvas
-        contentScale="auto"
-        update="auto"
-        debug=true
-        src="./stairwellWall.stl"></x3d-canvas>
-  </body>
+
+    <div id="Zona_del_3d"></div>
+
+<script>
+
+    const browser = X3D.getBrowser;
+
+    const uVec = X3D.SFVec3f; //shortcut
+    const uRot = X3D.SFRotation;
+
+    const uColor = X3D.SFColor;
+
+    class uXite{
+        constructor(divID='Zona_del_3d'){
+            this.div = document.getElementById(divID);
+
+                this.canvas = document.createElement("x3d-canvas");
+                this.canvas.id = "x3d";
+                this.div.append(this.canvas);
+
+                    this.X3D = document.createElement("X3D");
+                    this.canvas.append(this.X3D);
+
+                        this.scene = document.createElement("Scene");
+                        this.X3D.append(this.scene);
+
+            this.boxes = [];
+
+        }
+
+        addBox(){
+            this.boxes.push(new uBox(this.scene));
+            return this.boxes[this.boxes.length-1];
+        }
+    }
+
+
+    class uBox{
+        constructor(scene){
+            this.scene = scene;
+            this.transform = document .createElement ("Transform"),
+            this.shape      = document .createElement ("Shape"),
+            this.appearance = document .createElement ("Appearance"),
+            this.material   = document .createElement ("Material"),
+            this.box        = document .createElement ("Box");
+
+            //this.transform .setAttribute ("id",           "BlueBox");
+            this.transform .setAttribute ("scale",        new X3D.SFVec3f(1,2,3));
+            this.material  .setAttribute ("diffuseColor", "0 0.5 1");
+
+            this.transform  .append (this.shape);
+            this.shape      .append (this.appearance);
+            this.shape      .append (this.box);
+            this.appearance .append (this.material);
+            this.scene      .append (this.transform);
+        }
+
+        size(v=new uVec()){
+            this.transform.setAttribute("scale", v);
+        }
+
+        pos(v=new uVec()) {
+            this.transform.setAttribute("translation", v);
+        }
+
+        rotate(r=new uRot(0,1,0,Math.PI/4)){
+            this.transform.setAttribute("rotation", r) ;
+        }
+
+        color(c = new uColor(1,1,1)){
+            this.material.setAttribute("diffuseColor", c);
+        }
+
+        image(imgURL = new X3D.MFString("./images/FullMoon2010.jpeg")){
+            this.texture = document.createElement("ImageTexture");
+            this.texture.setAttribute("url", imgURL);
+            this.appearance.append(this.texture);
+        }
+
+        remove(){
+            this.transform.remove();
+        }
+    }
+
+    
+
+    function removeBox (transform){
+        //const transform = document .querySelector ("#BlueBox");
+
+        transform .remove ();
+    }
+
+    //addBlueBox(uX.scene);
+
+    uX = new uXite();
+    box = uX.addBox();
+    console.log("boxNum", box);
+
+    box2 = uX.addBox();
+    box2.size(new uVec(3,1,1));
+    box2.pos(new uVec(3,0,0));
+    box2.rotate(new uRot(0,0,1, Math.PI/4));
+    box2.color(new uColor(.8,0,0.5));
+    box.image();
+
+
+</script>
+
 </body>
 </html>
