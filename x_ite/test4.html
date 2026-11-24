@@ -32,9 +32,6 @@
 <script>
 
 
-    
-    touchCounter = 0;
-
     class uXite{
         constructor(browser, scene){
 
@@ -71,21 +68,37 @@
             this.appearance = scene .createNode ("Appearance");
             this.material   = scene .createNode ("Material");
             this.box        = scene .createNode ("Box");
-            //this.touchSensor = scene.createNode ("TouchSensor");
-
+ 
             this.material  .diffuseColor    = new uColor(1,0,0);
             this.box       .size            = new uVec(1,2,3);
-            //this.transform .translation     = new uVec(3,0,0);
-
+            
             this.appearance .material       = this.material;
             this.shape      .appearance     = this.appearance;
             this.shape      .geometry       = this.box;
 
-            //this.transform  .children.push (this.shape, this.touchSensor);
-            // this.transform.children = new X3D.MFNode(this.shape);
-            // this.scene.rootNodes = new X3D.MFNode(this.transform);
             this.transform.children.push(this.shape);
             this.scene.rootNodes.push(this.transform);
+        }
+
+        addTouchSensor(callback = null) {
+
+            this.touchSensor = this.scene.createNode("TouchSensor");
+
+            // Attach sensor to the Transform
+            this.transform.children.push(this.touchSensor);
+
+            // Listen for interaction
+            this.touchSensor.addFieldCallback(
+                "on",
+                "isActive",
+                (active) => {
+                    if (active && callback) {
+                        callback(this);
+                    }
+                }
+            );
+
+            return this;
         }
 
         pos(v = new X3D.SFVec3f(0, 0, 0)) {
@@ -127,9 +140,12 @@
         uX = new uXite(browser, scene);
         box = uX.addBox();
 
-        const box2 = uX.addBox();
-        box2.pos(new X3D.SFVec3f(3, 0, 0));
-        box2.color(new X3D.SFColor(0, 0, 1));
+        // activating touch sensor
+        // box.addTouchSensor(function(box){
+        //     console.log("touched");
+        // })
+        box.addTouchSensor(box => {console.log("t2")});
+        
         
         await browser.replaceWorld(scene);
     });
