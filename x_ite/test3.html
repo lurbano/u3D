@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X_ITE 3D Cube</title>
+
+    <!-- Load X_ITE -->
+    <script defer src="./x_ite-16.8.1/x_ite.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        x3d-canvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="Zona_del_3d">
+        <x3d-canvas id="browser"></x3d-canvas>
+    </div>
+
+<script>
+window.addEventListener("load", async () => {
+
+    // Shortcuts
+    const uVec = X3D.SFVec3f;
+    const uRot = X3D.SFRotation;
+    const uColor = X3D.SFColor;
+
+    // Browser and scene
+    const browser = X3D.getBrowser("#browser");
+    const scene = await browser.createScene();
+
+    // Main Transform
+    const transform = scene.createNode("Transform");
+
+    // Reusable X_ITE helper
+    class uXite {
+
+        constructor(scene) {
+            this.scene = scene;
+        }
+
+        addBox(size = new uVec(2, 2, 2),
+               color = new uColor(0.1, 0.5, 0.9)) {
+
+            const transform = this.scene.createNode("Transform");
+            const shape = this.scene.createNode("Shape");
+            const box = this.scene.createNode("Box");
+            const appearance = this.scene.createNode("Appearance");
+            const material = this.scene.createNode("Material");
+
+            box.size = size;
+            material.diffuseColor = color;
+
+            appearance.material = material;
+            shape.geometry = box;
+            shape.appearance = appearance;
+
+            transform.children = new X3D.MFNode(shape);
+
+            return transform;
+        }
+    }
+
+    // Instantiate helper
+    const uX = new uXite(scene);
+
+    // Create cube
+    const cube = uX.addBox();
+
+    // Add cube to scene
+    //transform.children = new X3D.MFNode(shape);
+    scene.rootNodes = new X3D.MFNode(cube);
+
+    // Display scene
+    browser.replaceWorld(scene);
+
+});
+</script>

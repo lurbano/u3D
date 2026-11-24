@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X_ITE 3D Cube</title>
+
+    <!-- Load X_ITE -->
+    <script defer src="./x_ite-16.8.1/x_ite.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        x3d-canvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="Zona_del_3d">
+        <x3d-canvas id="browser"></x3d-canvas>
+    </div>
+
+<script>
+
+
+    
+    touchCounter = 0;
+
+    class uXite{
+        constructor(browser, scene){
+
+            this.browser = browser;
+            this.scene = scene;
+    
+            this.boxes = [];
+
+            this.viewpoint = scene.createNode("Viewpoint");
+            this.viewpoint.position = new X3D.SFVec3f(0, 0, 10);
+            this.viewpoint.set_bind = true;
+
+            scene.rootNodes.push(this.viewpoint);
+
+        }
+
+        addBox(){
+            const box = new uBox(this.scene);
+            this.boxes.push(box);
+            return box;
+        }
+    }
+
+
+    class uBox{
+        constructor(scene){
+            const uVec = X3D.SFVec3f; //shortcut
+            const uRot = X3D.SFRotation;
+            const uColor = X3D.SFColor;
+            console.log(scene);
+            this.scene = scene;
+            this.transform  = this.scene .createNode ("Transform");
+            this.shape      = scene .createNode ("Shape");
+            this.appearance = scene .createNode ("Appearance");
+            this.material   = scene .createNode ("Material");
+            this.box        = scene .createNode ("Box");
+            //this.touchSensor = scene.createNode ("TouchSensor");
+
+            this.material  .diffuseColor    = new uColor(1,0,0);
+            this.box       .size            = new uVec(1,2,3);
+            //this.transform .translation     = new uVec(3,0,0);
+
+            this.appearance .material       = this.material;
+            this.shape      .appearance     = this.appearance;
+            this.shape      .geometry       = this.box;
+
+            //this.transform  .children.push (this.shape, this.touchSensor);
+            // this.transform.children = new X3D.MFNode(this.shape);
+            // this.scene.rootNodes = new X3D.MFNode(this.transform);
+            this.transform.children.push(this.shape);
+            this.scene.rootNodes.push(this.transform);
+        }
+
+        pos(v = new X3D.SFVec3f(0, 0, 0)) {
+            this.transform.translation = v;
+            return this;
+        }
+
+        rotate(r = new X3D.SFRotation(0, 1, 0, Math.PI / 4)) {
+            this.transform.rotation = r;
+            return this;
+        }
+
+        size(v = new X3D.SFVec3f(1, 1, 1)) {
+            this.transform.scale = v;
+            return this;
+        }
+
+        color(c = new X3D.SFColor(1, 1, 1)) {
+            this.material.diffuseColor = c;
+            return this;
+        }
+
+        remove(){
+            this.transform.remove();
+        }
+    }
+
+    
+
+
+    window.addEventListener("load", async () => {
+
+
+        const browser = X3D.getBrowser("#browser");
+        const scene = await browser.createScene();
+
+        // 2. Instantiate all required nodes
+        // const transform   = scene.createNode("Transform");
+        uX = new uXite(browser, scene);
+        box = uX.addBox();
+
+        const box2 = uX.addBox();
+        box2.pos(new X3D.SFVec3f(3, 0, 0));
+        box2.color(new X3D.SFColor(0, 0, 1));
+        
+        await browser.replaceWorld(scene);
+    });
+    
+
+
+</script>
+
+</body>
+</html>

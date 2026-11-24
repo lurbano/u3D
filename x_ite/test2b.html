@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X_ITE 3D Cube</title>
+
+    <!-- Load X_ITE -->
+    <script defer src="./x_ite-16.8.1/x_ite.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        x3d-canvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="Zona_del_3d">
+        <x3d-canvas id="browser"></x3d-canvas>
+    </div>
+
+<script>
+
+
+  
+window.addEventListener("load", async () => {
+
+    try {
+        const browser = X3D.getBrowser("#browser");
+
+        const scene = await browser.createScene(
+            browser.getProfile("Interchange")
+        );
+
+        // Camera
+        const viewpoint = scene.createNode("Viewpoint");
+        viewpoint.position = new X3D.SFVec3f(0, 0, 10);
+        viewpoint.set_bind = true;
+
+        scene.rootNodes.push(viewpoint);
+
+        // Cube
+        const transform = scene.createNode("Transform");
+        const shape = scene.createNode("Shape");
+        const appearance = scene.createNode("Appearance");
+        const material = scene.createNode("Material");
+        const box = scene.createNode("Box");
+
+        material.diffuseColor = new X3D.SFColor(1, 0, 0);
+
+        appearance.material = material;
+        shape.appearance = appearance;
+        shape.geometry = box;
+
+        transform.children.push(shape);
+        scene.rootNodes.push(transform);
+
+        // Display
+        await browser.replaceWorld(scene);
+
+        console.log("Scene successfully loaded");
+
+    } catch (error) {
+        console.error("X_ITE error:", error);
+    }
+
+});
+
+
+
+</script>
+
+</body>
+</html>

@@ -36,6 +36,8 @@
 
     const uColor = X3D.SFColor;
 
+    touchCounter = 0;
+
     class uXite{
         constructor(divID='Zona_del_3d'){
             this.div = document.getElementById(divID);
@@ -103,11 +105,32 @@
             this.appearance.append(this.texture);
         }
 
+        addTouchSensor(){
+            this.touchSensor = new uTouchSensor(this);
+            return this.touchSensor;
+            // touchCounter += 1;
+            // let touchID = `touch-${touchCounter}`;
+            // this.touchSensor = document.createElement("TouchSensor");
+            // this.touchSensor.setAttribute("DEF", touchID);
+            // this.transform.append(this.touchSensor);
+            // return this.touchSensor;
+        }
+
         remove(){
             this.transform.remove();
         }
     }
 
+    class uTouchSensor{
+        constructor(obj){
+            this.obj = obj; // the object (e.g. box that the touchsensor is attached to)
+            touchCounter += 1;
+            this.touchID = `touch-${touchCounter}`;
+            this.touchSensor = document.createElement("TouchSensor");
+            this.touchSensor.setAttribute("DEF", this.touchID);
+            this.obj.transform.append(this.touchSensor);
+        }
+    }
     
 
     function removeBox (transform){
@@ -129,6 +152,12 @@
     box2.color(new uColor(.8,0,0.5));
     box.image();
 
+    box3 = uX.addBox();
+    box3.pos(new uVec(-3,-1,-0));
+    box3Sensor = box3.addTouchSensor();
+    box3Sensor.touchSensor.addFieldCallback(box3Sensor.touchID, "touchTime", (value) => {
+        box3.color(new uColor(0,1,1));
+    })
 
 </script>
 
