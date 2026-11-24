@@ -121,6 +121,98 @@
             return this;
         }
 
+        image(imgURL = new X3D.MFString("./images/FullMoon2010.jpeg")){
+            this.texture = this.scene.createNode("ImageTexture");
+            this.texture.url = imgURL;
+            this.appearance.texture = this.texture;
+            return this;
+        }
+
+        audioLoad(audioURL = "./audio/under-water-splash-3.mp3", volume=1, loop=false){
+            this.audio = new Audio(audioURL); //using browser's native Audio API
+            this.audio.volume = volume; // from 0 to 1.0
+            this.audio.loop = loop;
+            return this;
+        }
+
+        audioPlay(){
+            if (this.audio) {
+                this.audio.currentTime = 0;
+                this.audio.play().catch(error => {
+                    console.error("Audio playback error:", error);
+                });
+            }
+            return this;
+        }
+
+        audioVolume(){
+            this.audio.volume = Math.max(0, Math.min(1, value));
+            return this;
+        }
+
+        audioStop(){
+            if (this.audio){
+                this.audio.pause();
+                this.audio.currentTime = 0;
+            }
+            return this;
+        }
+
+        videoLoad(videoURL = new X3D.MFString("./video/shark-clip.mp4"), loop=false){
+            this.movieTexture = this.scene.createNode("MovieTexture");
+            this.movieTexture.url = videoURL;
+            this.movieTexture.loop = loop;
+            this.appearance.texture = this.movieTexture;
+            return this;
+        }
+
+        videoPlay(){
+            if (this.movieTexture){
+                this.movieTexture.startTime = this.browserTime();
+            }
+            return this;
+        }
+
+        browserTime(){
+            return this.scene.getBrowser().currentTime;
+        }
+
+        // videoLoad(videoURL = "./video/shark-clip.mp4", loop=false, muted=true){
+        //     this.video = document.createElement("video");
+
+        //     this.video.src          = url;
+        //     this.video.loop         = loop;
+        //     this.video.muted        = muted;
+        //     this.video.playsInline  = true;
+        //     this.video.preload      = "auto";
+
+        //     return this;
+        // }
+
+        // videoPlay(){
+        //     if (this.video) {
+        //         this.video.play().catch(error => {
+        //             console.error("Video playback error:", error);
+        //         });
+        //     }
+        //     return this;
+        // }
+
+        // videoPause(){
+        //     if (this.video) {
+        //         this.video.pause();
+        //     }
+        //     return this;
+        // }
+
+        // videoStop(){
+        //     if (this.video) {
+        //         this.video.pause();
+        //         this.video.currentTime = 0;
+        //     }
+        //     return this;
+        // }
+
         remove(){
             this.transform.remove();
         }
@@ -139,12 +231,19 @@
         // const transform   = scene.createNode("Transform");
         uX = new uXite(browser, scene);
         box = uX.addBox();
+        box.image();
+        box.audioLoad();
+        box.videoLoad();
 
         // activating touch sensor
         // box.addTouchSensor(function(box){
         //     console.log("touched");
         // })
-        box.addTouchSensor(box => {console.log("t2")});
+        box.addTouchSensor(box => {
+            console.log("t2");
+            box.audioPlay();
+            box.videoPlay();
+        });
         
         
         await browser.replaceWorld(scene);
