@@ -145,6 +145,13 @@
             return this;
         }
 
+        audioPause() {
+            if (this.audio) {
+                this.audio.pause();
+            }
+            return this;
+        }
+
         audioVolume(){
             this.audio.volume = Math.max(0, Math.min(1, value));
             return this;
@@ -177,41 +184,42 @@
             return this.scene.getBrowser().currentTime;
         }
 
-        // videoLoad(videoURL = "./video/shark-clip.mp4", loop=false, muted=true){
-        //     this.video = document.createElement("video");
+        addProximitySensor(
+            size = new X3D.SFVec3f(5, 5, 5),
+            callback = null
+        ) {
 
-        //     this.video.src          = url;
-        //     this.video.loop         = loop;
-        //     this.video.muted        = muted;
-        //     this.video.playsInline  = true;
-        //     this.video.preload      = "auto";
+            this.proximitySensor =
+                this.scene.createNode("ProximitySensor");
 
-        //     return this;
-        // }
+            this.proximitySensor.size = size;
+            this.proximitySensor.enabled = true;
 
-        // videoPlay(){
-        //     if (this.video) {
-        //         this.video.play().catch(error => {
-        //             console.error("Video playback error:", error);
-        //         });
-        //     }
-        //     return this;
-        // }
+            // Attach sensor to the Transform
+            this.transform.children.push(this.proximitySensor);
 
-        // videoPause(){
-        //     if (this.video) {
-        //         this.video.pause();
-        //     }
-        //     return this;
-        // }
+            // Listen for entering and leaving the region
+            this.proximitySensor.addFieldCallback(
+                "on",
+                "isActive",
+                (active) => {
 
-        // videoStop(){
-        //     if (this.video) {
-        //         this.video.pause();
-        //         this.video.currentTime = 0;
-        //     }
-        //     return this;
-        // }
+                    if (active) {
+                        if (callback) {
+                            callback(this, true);
+                        }
+                    }
+                    else {
+                        if (callback) {
+                            callback(this, false);
+                        }
+                    }
+
+                }
+            );
+
+            return this;
+        }
 
         remove(){
             this.transform.remove();
@@ -244,6 +252,18 @@
             box.audioPlay();
             box.videoPlay();
         });
+
+
+        box.addProximitySensor(new X3D.SFVec3f(5,5,5), 
+            (box, active) => {
+                if (active) {
+                    box.audioPlay();
+                } 
+                else {
+                    box.audioPause();
+                }
+            }
+        )
         
         
         await browser.replaceWorld(scene);
