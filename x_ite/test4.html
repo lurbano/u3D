@@ -239,6 +239,7 @@
         // const transform   = scene.createNode("Transform");
         uX = new uXite(browser, scene);
         box = uX.addBox();
+        box.color(X3D.SFColor(0,0,1));
         box.image();
         box.audioLoad();
         box.videoLoad();
@@ -258,6 +259,7 @@
             (box, active) => {
                 if (active) {
                     box.audioPlay();
+                    box.videoPlay();
                 } 
                 else {
                     box.audioPause();
